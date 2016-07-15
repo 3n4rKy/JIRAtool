@@ -1,23 +1,17 @@
 package datatypes;
 
 public class Instance {
+	private int instanceID; 
+	private String instanceName;
 	private String databaseURL;
 	private String databaseUser;
-	private String datbasePassword;
+	private String databasePassword;
 	private String webURL;
 	private String webUser;
 	private String webPassword;
 	
 	
-	public Instance(String databaseURL, String databaseUser, String datbasePassword, String webURL, String webUser,
-			String webPassword) {
-		super();
-		this.databaseURL = databaseURL;
-		this.databaseUser = databaseUser;
-		this.datbasePassword = datbasePassword;
-		this.webURL = webURL;
-		this.webUser = webUser;
-		this.webPassword = webPassword;
+	public Instance() {
 	}
 
 	public String getDatabaseURL() {
@@ -36,12 +30,12 @@ public class Instance {
 		this.databaseUser = databaseUser;
 	}
 
-	public String getDatbasePassword() {
-		return datbasePassword;
+	public String getDatabasePassword() {
+		return databasePassword;
 	}
 
-	public void setDatbasePassword(String datbasePassword) {
-		this.datbasePassword = datbasePassword;
+	public void setDatabasePassword(String datbasePassword) {
+		this.databasePassword = datbasePassword;
 	}
 
 	public String getWebURL() {
@@ -66,6 +60,14 @@ public class Instance {
 
 	public void setWebPassword(String webPassword) {
 		this.webPassword = webPassword;
+	}
+
+	public String getInstanceName() {
+		return instanceName;
+	}
+
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
 	}
 
 	
