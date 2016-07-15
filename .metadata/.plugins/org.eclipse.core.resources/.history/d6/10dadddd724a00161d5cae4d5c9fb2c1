@@ -1,0 +1,100 @@
+package gui;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.swt.widgets.Label;
+
+public class AddInstancesDialog extends Dialog {
+
+	protected Object result;
+	protected Shell shell;
+	private Text text;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private String CONFIG_FILE = "config.properties";
+	
+
+	/**
+	 * Create the dialog.
+	 * @param parent
+	 * @param style
+	 */
+	public AddInstancesDialog(Shell parent, int style) {
+		super(parent, style);
+		setText("SWT Dialog");
+	}
+
+	/**
+	 * Open the dialog.
+	 * @return the result
+	 */
+	public Object open() {
+		createContents();
+		shell.open();
+		shell.layout();
+		Display display = getParent().getDisplay();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Create contents of the dialog.
+	 */
+	private void createContents() {
+		shell = new Shell(getParent(), getStyle());
+		shell.setSize(720, 480);
+		shell.setText(getText());
+		
+		text = new Text(shell, SWT.BORDER);
+		text.setBounds(110, 10, 594, 21);
+		
+		Label lblDatabaseUrl = new Label(shell, SWT.CENTER);
+		lblDatabaseUrl.setBounds(10, 10, 94, 21);
+		formToolkit.adapt(lblDatabaseUrl, true, true);
+		lblDatabaseUrl.setText("Database URL");
+
+	}
+	
+	private void saveProperties() {
+		Properties prop = new Properties();
+		OutputStream output = null;
+
+		try {
+
+			output = new FileOutputStream(CONFIG_FILE);
+
+			// set the properties value
+			prop.setProperty("database", "localhost");
+			prop.setProperty("dbuser", "mkyong");
+			prop.setProperty("dbpassword", "password");
+
+			// save properties to project root folder
+			prop.store(output, null);
+
+		} catch (IOException io) {
+			io.printStackTrace();
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
+	
+}

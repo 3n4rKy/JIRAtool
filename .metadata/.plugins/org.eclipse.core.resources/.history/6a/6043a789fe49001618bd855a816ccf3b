@@ -1,0 +1,9 @@
+
+public class Instance {
+	public Instance() {
+		String databaseURL;
+		String webURL;
+		
+		
+	}
+}
