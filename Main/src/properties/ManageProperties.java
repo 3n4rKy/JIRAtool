@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import datatypes.Instance;
@@ -15,6 +16,7 @@ public class ManageProperties {
 	Properties prop = new Properties();
 	OutputStream output = null;
 	private static String CONFIG_FILE = "config.properties";
+	
 	 
 
 	public void saveProperties(Instance instance) {
@@ -55,11 +57,17 @@ public class ManageProperties {
 		
 	}
 	
-	private Instance readFile() {
+	private Instance[] readFile() {
 		Instance instance;
+		ArrayList<Instance> instances[];
 		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))) {
 		    for(String line; (line = br.readLine()) != null; ) {
-		        
+		    	int posKeyVal = line.indexOf('=');
+		    	
+		        String key = line.substring(0, posKeyVal).trim();
+		        String value = line.substring(posKeyVal + 1).trim();
+		        int posInstKey = key.indexOf('.');
+		        String instanceName = key.substring(0, posInstKey).trim();
 		    }
 		    // line is not visible here.
 		} catch (FileNotFoundException e) {
