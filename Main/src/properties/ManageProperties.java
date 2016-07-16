@@ -1,6 +1,9 @@
 package properties;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
@@ -12,7 +15,7 @@ public class ManageProperties {
 	Properties prop = new Properties();
 	OutputStream output = null;
 	private static String CONFIG_FILE = "config.properties";
-	int instanceID = 0; 
+	 
 
 	public void saveProperties(Instance instance) {
 
@@ -21,13 +24,12 @@ public class ManageProperties {
 			output = new FileOutputStream(CONFIG_FILE);
 
 			// set the properties value
-			prop.setProperty(instanceID + "InstanceName", instance.getInstanceName());
-			prop.setProperty(instanceID + "DatabaseURL", instance.getDatabaseURL());
-			prop.setProperty(instanceID + "DatabaseUser", instance.getDatabaseUser());
-			prop.setProperty(instanceID + "DatabasePassword", instance.getDatabasePassword());
-			prop.setProperty(instanceID + "WebURL", instance.getWebURL());
-			prop.setProperty(instanceID + "WebUser", instance.getWebUser());
-			prop.setProperty(instanceID + "WebPassword", instance.getWebPassword());
+			prop.setProperty(instance.getInstanceName() + "DatabaseURL", instance.getDatabaseURL());
+			prop.setProperty(instance.getInstanceName() + "DatabaseUser", instance.getDatabaseUser());
+			prop.setProperty(instance.getInstanceName() + "DatabasePassword", instance.getDatabasePassword());
+			prop.setProperty(instance.getInstanceName() + "WebURL", instance.getWebURL());
+			prop.setProperty(instance.getInstanceName() + "WebUser", instance.getWebUser());
+			prop.setProperty(instance.getInstanceName() + "WebPassword", instance.getWebPassword());
 			
 
 			// save properties to project root folder
@@ -50,6 +52,24 @@ public class ManageProperties {
 		boolean instanceExists = false;
 		
 		return instanceExists;
+		
+	}
+	
+	private Instance readFile() {
+		Instance instance;
+		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))) {
+		    for(String line; (line = br.readLine()) != null; ) {
+		        
+		    }
+		    // line is not visible here.
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 		
 	}
 }
