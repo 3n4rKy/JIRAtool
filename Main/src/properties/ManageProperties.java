@@ -58,16 +58,31 @@ public class ManageProperties {
 	}
 	
 	private Instance[] readFile() {
-		Instance instance;
+		Instance instance = null;
 		ArrayList<Instance> instances[];
+		String tempInstanceName = "";
+		int i = 0;
 		try(BufferedReader br = new BufferedReader(new FileReader(CONFIG_FILE))) {
 		    for(String line; (line = br.readLine()) != null; ) {
 		    	int posKeyVal = line.indexOf('=');
 		    	
-		        String key = line.substring(0, posKeyVal).trim();
+		        String instanceAndKey = line.substring(0, posKeyVal).trim();
 		        String value = line.substring(posKeyVal + 1).trim();
-		        int posInstKey = key.indexOf('.');
-		        String instanceName = key.substring(0, posInstKey).trim();
+		        int posInstKey = instanceAndKey.indexOf('.');
+		        String instanceName = instanceAndKey.substring(0, posInstKey).trim();
+		        String key = instanceAndKey.substring(posInstKey+1).trim();
+		        if (!tempInstanceName.equals(instanceName)) {
+		        	
+		        	instance.setInstanceName(instanceName);
+		        		
+		        	}
+		        switch (key) {
+	        	case "databaseURL": instance.setDatabaseURL(value);
+		        }
+		   
+		        tempInstanceName = instanceName;
+		        
+		        
 		    }
 		    // line is not visible here.
 		} catch (FileNotFoundException e) {
